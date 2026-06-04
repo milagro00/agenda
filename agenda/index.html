@@ -115,13 +115,13 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .btn-icon:hover{background:var(--bg-alt); color:var(--text-main); border-color:var(--border-focus)}
 
 /* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter: blur(3px);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(3px);z-index:100;align-items:flex-end;justify-content:center;padding:0}
 .modal-overlay.open{display:flex}
-.modal{background:var(--bg-sec);border-radius:var(--r3);border:1px solid var(--border);width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.modal-header{padding:1.25rem 1.5rem 1rem;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between}
-.modal-title{font-family: 'Times New Roman', Times, serif;font-size:20px; color:var(--text-main)}
-.modal-body{padding:1.25rem 1.5rem}
-.modal-footer{padding:.75rem 1.5rem 1.25rem;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border-light)}
+.modal{background:var(--bg-sec);border-radius:var(--r3) var(--r3) 0 0;border:1px solid var(--border);border-bottom:none;width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.6)}
+.modal-header{padding:1rem 1.25rem 0.75rem;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-family:'Times New Roman',Times,serif;font-size:18px;color:var(--text-main)}
+.modal-body{padding:1rem 1.25rem;overflow-y:auto;flex:1}
+.modal-footer{padding:.65rem 1.25rem 1rem;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border-light);flex-shrink:0}
 
 /* Form */
 .form-group{margin-bottom:1rem}
@@ -423,11 +423,32 @@ const defaultOption = `<option value="">--</option>`;
 const todayJs = new Date().getDay();
 const todayIdx = todayJs === 0 ? 6 : todayJs - 1;
 
+const STORAGE_KEY = 'miAgendaState_v1';
+
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    // Merge saved into default state safely
+    if(saved.settings) state.settings = {...state.settings, ...saved.settings};
+    if(saved.items) state.items = saved.items;
+    if(saved.doneMap) state.doneMap = saved.doneMap;
+    if(saved.nextId) state.nextId = saved.nextId;
+    if(saved.water && saved.water.length===7) state.water = saved.water;
+    if(saved.blocks && saved.blocks.length===7) state.blocks = saved.blocks;
+  }catch(e){}
+}
+
 let state = {
-  activeDay: todayIdx, // Inicia automáticamente en el día actual
-  settings: {hourStart:5, hourEnd:22, libro:'', curso:'', idioma:''}, // Agregados campos de enfoque
+  activeDay: todayIdx,
+  settings: {hourStart:5, hourEnd:22, libro:'', curso:'', idioma:''},
   water: Array(7).fill(null).map(()=>Array(8).fill(false)),
-  blocks: Array(7).fill(null).map(()=>({})), // {hour_block: true/false}
+  blocks: Array(7).fill(null).map(()=>({})),
   items: [],
   doneMap: {},
   nextId: 1,
@@ -655,22 +676,22 @@ function toggleWater(d, index){
   } else {
     for (let i = 0; i < 8; i++) { state.water[d][i] = (i <= index); }
   }
-  renderDay();
+  renderDay(); saveState();
 }
 
 function toggleBlock(d,h,b){
   const key=`${h}_${b}`;
   state.blocks[d][key]=!state.blocks[d][key];
-  renderDay();
+  renderDay(); saveState();
 }
 function toggleDone(id,d){
   const k=id+'-'+d;
   state.doneMap[k]=!state.doneMap[k];
-  renderDay();
+  renderDay(); saveState();
 }
 function deleteItem(id){
   state.items=state.items.filter(it=>it.id!==id);
-  renderDay();
+  renderDay(); saveState();
 }
 
 // --- ADD MODAL ---
@@ -800,7 +821,7 @@ function saveItem(){
     }
     state.items.push({id,name,type,days:[...selectedDays],schedules});
   }
-  closeAddModal();renderDay();
+  closeAddModal(); renderDay(); saveState();
 }
 
 // --- SETTINGS ---
@@ -828,7 +849,7 @@ function saveSettings(){
   state.settings.idioma = document.getElementById('setIdioma').value.trim();
   
   closeSettings();
-  renderDay();
+  renderDay(); saveState();
 }
 
 let clearConfirmTimeout;
@@ -867,20 +888,24 @@ function clearAllData(btnElement) {
   state.blocks = Array(7).fill(null).map(()=>({}));
   
   closeSettings();
-  renderDay();
+  renderDay(); saveState();
 }
 
 // --- INIT ---
 function init(){
-  state.items.push({id:state.nextId++,name:'Revisar correos',type:'tarea',day:todayIdx,hora:'09:00',section:'manana'});
-  state.items.push({id:state.nextId++,name:'Lectura y resumen',type:'tarea',day:todayIdx,hora:'',section:'tarde'});
-  state.items.push({id:state.nextId++,name:'Reunión de proyecto',type:'evento',days:[todayIdx,(todayIdx+2)%7],
-    schedules:{[todayIdx]:{start:'10:00',end:'11:30'},[(todayIdx+2)%7]:{start:'09:00',end:'10:00'}}});
-  state.items.push({id:state.nextId++,name:'Meditar',type:'rutina',days:[0,1,2,3,4],
-    schedules:Object.fromEntries([0,1,2,3,4].map(i=>[i,{start:'06:00',end:'07:00'}]))});
-  state.water[todayIdx][0]=true;
-  state.water[todayIdx][1]=true;
-  state.water[todayIdx][2]=true;
+  loadState();
+  // Solo cargar datos de ejemplo si no hay nada guardado
+  if(state.items.length === 0){
+    state.items.push({id:state.nextId++,name:'Revisar correos',type:'tarea',day:todayIdx,hora:'09:00',section:'manana'});
+    state.items.push({id:state.nextId++,name:'Lectura y resumen',type:'tarea',day:todayIdx,hora:'',section:'tarde'});
+    state.items.push({id:state.nextId++,name:'Reunión de proyecto',type:'evento',days:[todayIdx,(todayIdx+2)%7],
+      schedules:{[todayIdx]:{start:'10:00',end:'11:30'},[(todayIdx+2)%7]:{start:'09:00',end:'10:00'}}});
+    state.items.push({id:state.nextId++,name:'Meditar',type:'rutina',days:[0,1,2,3,4],
+      schedules:Object.fromEntries([0,1,2,3,4].map(i=>[i,{start:'06:00',end:'07:00'}]))});
+    state.water[todayIdx][0]=true;
+    state.water[todayIdx][1]=true;
+    state.water[todayIdx][2]=true;
+  }
   renderTabs();renderDay();
 }
 init();
