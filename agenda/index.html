@@ -58,72 +58,6 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 /* Day layout */
 .day-layout{display:grid;grid-template-columns:2fr 3fr;gap:1rem}
 
-/* 📱 OPTIMIZACIÓN EXTREMA PARA CELULARES (Redmi 13C y similares) */
-@media(max-width:680px){
-  .day-layout{grid-template-columns:1fr; gap:0.4rem}
-  #app{padding:0.25rem}
-  
-  /* Cabecera ultra compacta */
-  .app-title{font-size:16px}
-  .top-bar{margin-bottom:0.4rem}
-  .top-actions{gap:4px}
-  
-  /* Pestañas de días */
-  .day-tabs{margin-bottom:0.4rem; padding:2px; border-radius:6px; gap:2px}
-  .day-tab{min-width:35px; padding:4px 2px; font-size:10px}
-  .day-tab .tab-num{font-size:9px; margin-top:0}
-  
-  /* Paneles */
-  .panel{border-radius:8px}
-  .panel-header{padding:0.4rem 0.5rem 0.3rem}
-  .panel-title{font-size:14px}
-  .panel-body{padding:0.4rem 0.5rem}
-  
-  /* Vasos de agua: Reducidos al máximo */
-  .water-section{margin-bottom:0.5rem}
-  .section-label{font-size:9px; margin-bottom:3px}
-  .water-cups{gap:2px}
-  .water-cup{width:20px; height:20px; font-size:10px; border-width:1px}
-  
-  /* Tareas más compactas */
-  .task-section{margin-bottom:0.4rem}
-  .task-section-header{font-size:9px; margin-bottom:3px}
-  .task-list{gap:2px}
-  .task-item{padding:3px 5px; gap:4px}
-  .task-check{width:12px; height:12px; margin-top:1px; border-width:1px}
-  .task-name{font-size:11px; line-height:1.2}
-  .task-time{font-size:9px}
-  .task-type-dot{width:5px; height:5px; margin-top:3px}
-  .empty-tasks{font-size:11px; padding:2px 0}
-  
-  /* Cuadrícula de tiempo miniaturizada */
-  .time-row{min-height:18px}
-  .time-label{width:28px; font-size:9px; padding-top:2px; padding-right:2px}
-  .time-blocks{gap:1px; padding:1px 0 1px 1px}
-  .time-block{width:12px; height:12px; border-radius:2px} 
-  
-  /* Superposición de Eventos */
-  .event-label-bar{left:90px; top:1px; font-size:9px; padding:0 3px; border-left-width:2px; height:14px; line-height:14px}
-  
-  /* Botones y Modales */
-  .btn{padding:3px 6px; font-size:10px; gap:3px}
-  .btn-icon{padding:3px; font-size:13px}
-  .modal-header{padding:0.4rem 0.5rem}
-  .modal-title{font-size:13px}
-  .modal-body{padding:0.5rem; gap:0.4rem}
-  .modal-footer{padding:0.5rem}
-  .form-group{margin-bottom:0.4rem}
-  .form-label{font-size:9px; margin-bottom:2px}
-  .form-input, .form-select{padding:3px 6px; font-size:11px}
-  .day-chip{padding:3px 6px; font-size:10px}
-  .time-select{padding:3px 12px 3px 4px; font-size:11px}
-  
-  /* Leyenda */
-  .legend{padding:4px 0.5rem; gap:6px}
-  .legend-item{font-size:9px}
-  .legend-dot{width:7px; height:7px}
-}
-
 /* Panels */
 .panel{background:var(--bg-sec);border-radius:var(--r3);border:1px solid var(--border);overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2);}
 .panel-header{padding:1rem 1.25rem 0.75rem;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between}
@@ -219,6 +153,56 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--bg-main)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* 📱 OPTIMIZACIÓN EXTREMA PARA CELULARES (Redmi 13C y similares) */
+/* ¡Moviendo esto al final del todo, ahora sí funciona y sobreescribe lo anterior! */
+@media(max-width:680px){
+  #app{padding:0.4rem}
+  .app-title{font-size:18px}
+  .top-bar{margin-bottom:0.5rem}
+  .top-actions{gap:4px}
+  .btn{padding:4px 8px; font-size:11px; gap:4px}
+  .btn-icon{padding:4px; font-size:15px}
+  
+  .day-tabs{margin-bottom:0.6rem; padding:2px; border-radius:8px; gap:2px}
+  .day-tab{min-width:35px; padding:4px 2px; font-size:11px}
+  .day-tab .tab-num{font-size:9px; margin-top:0}
+  
+  .day-layout{grid-template-columns:1fr; gap:0.5rem}
+  
+  .panel{border-radius:10px}
+  .panel-header{padding:0.6rem 0.8rem 0.4rem}
+  .panel-title{font-size:15px}
+  .panel-body{padding:0.6rem 0.8rem}
+  
+  /* Achicando vasos de agua para que entren en una sola fila */
+  .water-section{margin-bottom:0.8rem}
+  .section-label{font-size:10px; margin-bottom:4px}
+  .water-cups{gap:4px}
+  .water-cup{width:24px; height:24px; font-size:12px; border-width:1px}
+  
+  /* Tareas más compactas */
+  .task-section{margin-bottom:0.6rem}
+  .task-section-header{font-size:10px; margin-bottom:4px}
+  .task-list{gap:3px}
+  .task-item{padding:4px 6px; gap:5px}
+  .task-check{width:14px; height:14px; margin-top:1px; border-width:1px}
+  .task-name{font-size:13px; line-height:1.2}
+  .task-time{font-size:10px}
+  .task-type-dot{width:6px; height:6px; margin-top:4px}
+  .empty-tasks{font-size:12px; padding:2px 0}
+  
+  /* Cuadrícula de 10 min ultra pequeña */
+  .time-row{min-height:22px}
+  .time-label{width:32px; font-size:10px; padding-top:2px; padding-right:4px}
+  .time-blocks{gap:2px; padding:2px 0 2px 2px}
+  .time-block{width:14px; height:14px; border-radius:3px} 
+  .event-label-bar{left:110px; top:2px; font-size:10px; padding:1px 4px; border-left-width:2px; height:16px; line-height:14px}
+  
+  .legend{padding:6px 0.8rem; gap:8px}
+  .legend-item{font-size:11px}
+  .legend-dot{width:8px; height:8px}
+}
 </style>
 </head>
 <body>
