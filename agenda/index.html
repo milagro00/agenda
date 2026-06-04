@@ -894,18 +894,7 @@ function clearAllData(btnElement) {
 // --- INIT ---
 function init(){
   loadState();
-  // Solo cargar datos de ejemplo si no hay nada guardado
-  if(state.items.length === 0){
-    state.items.push({id:state.nextId++,name:'Revisar correos',type:'tarea',day:todayIdx,hora:'09:00',section:'manana'});
-    state.items.push({id:state.nextId++,name:'Lectura y resumen',type:'tarea',day:todayIdx,hora:'',section:'tarde'});
-    state.items.push({id:state.nextId++,name:'Reunión de proyecto',type:'evento',days:[todayIdx,(todayIdx+2)%7],
-      schedules:{[todayIdx]:{start:'10:00',end:'11:30'},[(todayIdx+2)%7]:{start:'09:00',end:'10:00'}}});
-    state.items.push({id:state.nextId++,name:'Meditar',type:'rutina',days:[0,1,2,3,4],
-      schedules:Object.fromEntries([0,1,2,3,4].map(i=>[i,{start:'06:00',end:'07:00'}]))});
-    state.water[todayIdx][0]=true;
-    state.water[todayIdx][1]=true;
-    state.water[todayIdx][2]=true;
-  }
+  // Sin datos de ejemplo — la app arranca vacía
   renderTabs();renderDay();
 }
 init();
