@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <!-- El manifest se inyectará aquí dinámicamente con JS -->
 <style>
@@ -92,7 +92,7 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .empty-tasks{font-size:13px;color:var(--text-mut);font-style:italic;padding:4px 0}
 
 /* Time grid */
-.time-grid{overflow-y:auto;max-height:420px;position:relative}
+.time-grid{overflow-y:visible;position:relative}
 .time-row{display:flex;align-items:stretch;min-height:30px;border-bottom:1px solid var(--border-light);position:relative}
 .time-row:last-child{border-bottom:none}
 .time-label{width:40px;flex-shrink:0;font-size:11px;color:var(--text-sec);padding:4px 6px 4px 0;text-align:right;user-select:none;align-self:flex-start;padding-top:6px}
@@ -102,8 +102,9 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .time-block.occupied{background:var(--accent-dark);border-color:var(--accent-dark)}
 .time-block.event-occupied{background:var(--accent-mid);border-color:var(--accent-mid);cursor:default}
 .time-block.routine-occupied{background:var(--accent-light);border-color:var(--accent-light);cursor:default}
-.event-label-bar{position:absolute;right:0;top:6px;left:170px;background:var(--accent-bg-mid);border-left:3px solid var(--accent-mid);border-radius:0 4px 4px 0;padding:3px 8px;font-size:12px;color:var(--text-main);font-weight:bold;z-index:2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none; box-shadow: 0 2px 5px rgba(0,0,0,0.3);}
+.event-label-bar{position:absolute;right:0;top:6px;left:auto;background:var(--accent-bg-mid);border-left:3px solid var(--accent-mid);border-radius:0 4px 4px 0;padding:3px 8px;font-size:12px;color:var(--text-main);font-weight:bold;z-index:2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none; box-shadow: 0 2px 5px rgba(0,0,0,0.3);}
 .routine-label-bar{border-left-color:var(--accent-light);background:var(--accent-bg-light);color:var(--text-main)}
+.task-label-bar{border-left-color:var(--accent-dark);background:var(--bg-alt);}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-sec);font-family: 'Times New Roman', Times, serif;font-size:13px;color:var(--text-main);cursor:pointer;transition:all .15s;white-space:nowrap}
@@ -179,37 +180,87 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--border-focus)}
 
-/* ===== MOBILE (Redmi 13C ~390px) ===== */
+/* ===== MOBILE (Xiaomi Redmi 13C — 393px lógicos, 720×1600 físicos) ===== */
 @media(max-width:480px){
-  #app{padding:0.4rem}
-  .top-bar{margin-bottom:0.5rem;gap:4px}
-  .app-title{font-size:17px}
+  /* App container — aprovecha todo el ancho */
+  #app{padding:0.35rem 0.4rem}
+
+  /* Top bar */
+  .top-bar{margin-bottom:0.45rem;gap:4px}
+  .app-title{font-size:16px}
   .top-actions{gap:5px}
   .btn{padding:5px 9px;font-size:12px;gap:4px}
   .btn-icon{padding:5px;font-size:15px}
-  .day-tabs{padding:2px;gap:2px;margin-bottom:0.5rem}
-  .day-tab{padding:4px 2px;font-size:12px;min-width:0}
-  .panel-header{padding:0.5rem 0.7rem 0.4rem}
-  .panel-title{font-size:14px}
-  .panel-body{padding:0.5rem 0.7rem}
-  .water-section{margin-bottom:0.6rem}
-  .water-cups{flex-wrap:nowrap;overflow-x:auto;gap:4px}
-  .water-cup{width:24px;height:24px;font-size:12px;flex-shrink:0}
-  .section-label{font-size:10px;margin-bottom:4px}
-  .task-section{margin-bottom:0.5rem}
-  .task-section-header{font-size:10px;margin-bottom:3px}
-  .task-item{padding:4px 6px;gap:5px}
-  .task-name{font-size:13px}
-  .task-time{font-size:10px}
-  .task-check{width:14px;height:14px}
-  .time-grid{max-height:280px}
-  .time-row{min-height:26px}
-  .time-label{width:36px;font-size:10px;padding-top:5px}
-  .time-blocks{gap:2px;padding:3px 0 3px 2px}
-  .time-block{width:16px;height:16px;border-radius:2px}
-  .event-label-bar{left:150px;font-size:11px;padding:2px 6px}
-  .legend{padding:6px 0.7rem;gap:8px}
-  .legend-item{font-size:10px}
+
+  /* Pestañas de días — más compactas y uniformes */
+  .day-tabs{
+    padding:2px;gap:2px;margin-bottom:0.45rem;
+    border-radius:10px;
+  }
+  .day-tab{
+    padding:5px 0;font-size:12px;min-width:0;flex:1;
+    border-radius:8px;
+  }
+  .day-tab .tab-short{font-size:12px}
+
+  /* Layout: columna única, sin gap excesivo */
+  .day-layout{gap:0.4rem}
+
+  /* Panel */
+  .panel{border-radius:14px}
+  .panel-header{padding:0.55rem 0.8rem 0.45rem}
+  .panel-title{font-size:15px}
+  .panel-body{padding:0.5rem 0.75rem}
+
+  /* Agua */
+  .water-section{margin-bottom:0.65rem}
+  .water-cups{flex-wrap:nowrap;overflow-x:auto;gap:5px;padding-bottom:2px}
+  .water-cup{width:30px;height:30px;font-size:13px;flex-shrink:0;border-radius:50%}
+  .section-label{font-size:10.5px;margin-bottom:5px}
+
+  /* Tareas */
+  .task-section{margin-bottom:0.55rem}
+  .task-section-header{font-size:10.5px;margin-bottom:4px;gap:4px}
+  .task-list{gap:4px}
+  .task-item{
+    padding:7px 8px;gap:6px;
+    border-radius:8px;
+    min-height:36px;
+    align-items:center;
+  }
+  .task-name{font-size:13.5px;line-height:1.25}
+  .task-time{font-size:11px}
+  .task-check{width:16px;height:16px;border-radius:4px;flex-shrink:0;margin-top:0}
+  .task-type-dot{margin-top:0}
+
+  /* Time-blocking — sin scroll, se expande con la página */
+  .time-grid{
+    overflow-y:visible;
+    max-height:none;
+    -webkit-overflow-scrolling:unset;
+  }
+  .time-row{min-height:32px}
+  .time-label{
+    width:28px;font-size:10.5px;
+    padding:0 4px 0 0;padding-top:8px;
+  }
+  .time-blocks{
+    gap:3px;
+    padding:5px 0 5px 3px;
+  }
+  .time-block{width:20px;height:20px;border-radius:3px}
+
+  /* Barra de etiqueta — left se calcula dinámicamente por JS */
+  .event-label-bar{
+    font-size:11px;
+    padding:3px 7px;
+    top:5px;
+  }
+
+  /* Leyenda */
+  .legend{padding:6px 0.75rem;gap:10px;flex-wrap:nowrap}
+  .legend-item{font-size:10.5px;gap:4px}
+  .legend-dot{width:11px;height:11px}
 }
 </style>
 </head>
@@ -454,7 +505,9 @@ function renderDay(){
 
   // Build event map: which (hour,block) slots are covered by items
   const itemSlots = {};
-  const itemBarRows = {};
+  const itemBarRows = {}; // key: "h_b" → array of items that START at that block
+
+  // Eventos y rutinas: ocupan slots y muestran barra
   dayItems.filter(it=>it.type!=='tarea'&&it.schedule).forEach(it=>{
     const sch = it.schedule;
     if(!sch.start||!sch.end) return;
@@ -466,10 +519,40 @@ function renderDay(){
       const key=`${hh}_${bb}`;
       itemSlots[key]=it;
     }
-    // bar label: on the first row
     const fk=`${sh}_${Math.floor(sm/10)}`;
-    itemBarRows[fk]=it;
+    if(!itemBarRows[fk]) itemBarRows[fk]=[];
+    itemBarRows[fk].push(it);
   });
+
+  // Tareas con hora: solo muestran barra, no ocupan slots de color
+  dayItems.filter(it=>it.type==='tarea'&&it.hora).forEach(it=>{
+    const [sh,sm]=it.hora.split(':').map(Number);
+    const fk=`${sh}_${Math.floor(sm/10)}`;
+    if(!itemBarRows[fk]) itemBarRows[fk]=[];
+    itemBarRows[fk].push(it);
+  });
+
+  // Helper: render label bars for a given hour row
+  // We need to show bars for ALL blocks within this hour that have a start
+  function renderBarsForHour(h){
+    let bars = '';
+    let stackIdx = 0; // índice acumulativo de barras en esta hora
+    for(let b=0;b<6;b++){
+      const key=`${h}_${b}`;
+      if(itemBarRows[key]){
+        itemBarRows[key].forEach((it)=>{
+          // La barra arranca justo después de los 6 bloques de la fila
+          const blockW = 18, blockGap = 2, labelW = 40, padL = 3;
+          const leftPx = labelW + padL + 6*(blockW+blockGap) + 1;
+          const topOffset = 5 + stackIdx * 22;
+          const typeClass = it.type==='rutina' ? 'routine-label-bar' : it.type==='tarea' ? 'task-label-bar' : '';
+          bars += `<div class="event-label-bar ${typeClass}" style="left:${leftPx}px;top:${topOffset}px">${it.name}</div>`;
+          stackIdx++;
+        });
+      }
+    }
+    return bars;
+  }
 
   const rightHTML = `
     <div class="panel">
@@ -477,9 +560,17 @@ function renderDay(){
         <h3 class="panel-title" style="font-size:17px">Time-blocking</h3>
       </div>
       <div class="time-grid" id="timeGrid">
-        ${hours.map(h=>`
-          <div class="time-row">
-            <div class="time-label">${String(h).padStart(2,'0')}:00</div>
+        ${hours.map(h=>{
+          // Contar el total de barras que arrancan en esta hora (en cualquier bloque)
+          let totalBars = 0;
+          for(let b=0;b<6;b++){
+            const arr = itemBarRows[`${h}_${b}`];
+            if(arr) totalBars += arr.length;
+          }
+          const rowMinH = totalBars > 1 ? 30 + (totalBars-1)*22 : 32;
+          return `
+          <div class="time-row" style="min-height:${rowMinH}px">
+            <div class="time-label">${String(h).padStart(2,'0')}</div>
             <div class="time-blocks" style="position:relative">
               ${[0,1,2,3,4,5].map(b=>{
                 const key=`${h}_${b}`;
@@ -493,12 +584,10 @@ function renderDay(){
                   ${clickable?`onclick="toggleBlock(${d},${h},${b})" title="${String(h).padStart(2,'0')}:${String(b*10).padStart(2,'0')}"`:''}
                   ></div>`;
               }).join('')}
-              ${itemBarRows[`${h}_0`]?`
-                <div class="event-label-bar ${itemBarRows[`${h}_0`].type==='rutina'?'routine-label-bar':''}" style="left:176px">
-                  ${itemBarRows[`${h}_0`].name}
-                </div>`:''}
+              ${renderBarsForHour(h)}
             </div>
-          </div>`).join('')}
+          </div>`;
+        }).join('')}
       </div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--accent-dark)"></div> Manual</div>
