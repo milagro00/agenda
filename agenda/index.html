@@ -933,12 +933,15 @@ manifestLink.rel = 'manifest';
 manifestLink.href = URL.createObjectURL(manifestBlob);
 document.head.appendChild(manifestLink);
 
-// Registro del Service Worker (requiere sw.js en el mismo directorio)
-// Solo se registra si estamos en un dominio propio (no en previews)
-if ('serviceWorker' in navigator && !location.hostname.includes('claudeusercontent.com')) {
-  navigator.serviceWorker.register('./sw.js')
-    .then(() => console.log('Service Worker registrado correctamente'))
-    .catch(() => {});
+// Limpiar Service Workers viejos que puedan estar cacheando archivos desactualizados
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(reg => reg.unregister());
+  });
+  // Limpiar caches viejos
+  if (window.caches) {
+    caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+  }
 }
 
 // 3. Manejar el evento para mostrar el botón de Instalar
