@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
-<!-- El manifest se inyectará aquí dinámicamente con JS -->
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -19,12 +18,11 @@
   --border-light: #262626; /* Bordes sutiles */
   --border-focus: #777777; /* Bordes al hacer foco */
   
-  /* Acentos en escala de grises para el Time-blocking */
+  /* Acentos en escala de grises */
   --accent-dark: #A3A3A3;  /* Tareas / Manual */
   --accent-mid: #6B6B6B;   /* Eventos */
   --accent-light: #404040; /* Rutinas */
   
-  /* Fondos sutiles para los bloques superpuestos */
   --accent-bg-mid: #2A2A2A;
   --accent-bg-light: #222222;
 
@@ -40,7 +38,7 @@ body{
 }
 h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 
-/* Layout */
+/* Layout Desktop General */
 #app{max-width:1100px;margin:0 auto;padding:1rem}
 .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
 .app-title{font-size:24px;color: var(--text-main); letter-spacing:-0.5px}
@@ -60,49 +58,64 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 /* Day layout */
 .day-layout{display:grid;grid-template-columns:2fr 3fr;gap:1rem}
 
-/* 📱 OPTIMIZACIÓN EXTREMA PARA CELULARES (Ej. Redmi 13C) */
+/* 📱 OPTIMIZACIÓN EXTREMA PARA CELULARES (Redmi 13C y similares) */
 @media(max-width:680px){
   .day-layout{grid-template-columns:1fr; gap:0.5rem}
   #app{padding:0.25rem}
+  
+  /* Textos y cabeceras más pequeñas */
   .app-title{font-size:18px}
   .top-bar{margin-bottom:0.5rem}
-  .day-tabs{margin-bottom:0.5rem; padding:2px}
-  .day-tab{min-width:40px; padding:4px; font-size:12px}
-  .panel-header{padding:0.5rem 0.75rem 0.5rem}
-  .panel-title{font-size:16px}
-  .panel-body{padding:0.5rem 0.75rem}
+  .day-tabs{margin-bottom:0.5rem; padding:2px; border-radius:8px;}
+  .day-tab{min-width:35px; padding:4px 2px; font-size:11px}
+  .day-tab .tab-num{font-size:9px}
   
-  /* Vasos de agua más pequeños */
-  .water-section{margin-bottom:0.75rem}
-  .water-cups{gap: 4px;}
-  .water-cup{width:26px; height:26px; font-size:12px}
+  .panel{border-radius:10px}
+  .panel-header{padding:0.4rem 0.6rem 0.3rem}
+  .panel-title{font-size:15px}
+  .panel-body{padding:0.5rem 0.6rem}
+  
+  /* Vasos de agua: Reducidos drásticamente */
+  .water-section{margin-bottom:0.6rem}
+  .section-label{font-size:10px; margin-bottom:4px;}
+  .water-cups{gap: 3px;}
+  .water-cup{width:22px; height:22px; font-size:11px; border-width:1px;}
   
   /* Tareas más compactas */
   .task-section{margin-bottom:0.5rem}
-  .task-section-header{font-size: 11px;}
-  .task-item{padding:4px 6px}
-  .task-check{width: 14px; height: 14px;}
-  .task-name{font-size:13px}
-  .task-time{font-size:11px}
+  .task-section-header{font-size: 10px; margin-bottom: 4px;}
+  .task-list{gap: 2px;}
+  .task-item{padding:3px 5px; gap:6px}
+  .task-check{width: 14px; height: 14px; margin-top:1px;}
+  .task-name{font-size:12px; line-height: 1.2;}
+  .task-time{font-size:10px}
+  .task-type-dot{width:6px; height:6px; margin-top:4px}
   
   /* Cuadrícula de tiempo ultra-compacta */
-  .time-row{min-height:26px} /* Filas más delgadas */
-  .time-label{width:36px; font-size:10px; padding-top:4px; padding-right:4px;}
-  .time-blocks{gap:2px; padding:3px 0 3px 2px}
-  .time-block{width:16px; height:16px; border-radius: 3px;} /* Cuadritos más chiquitos */
-  .event-label-bar{left:120px; top:2px; font-size:10px; padding:1px 4px}
+  .time-row{min-height:22px} /* Filas de horario mucho más delgadas */
+  .time-label{width:32px; font-size:9px; padding-top:4px; padding-right:4px;}
+  .time-blocks{gap:1px; padding:2px 0 2px 2px}
+  .time-block{width:14px; height:14px; border-radius: 2px;} /* Cuadritos minúsculos */
   
-  /* Botones y Menús */
-  .btn{padding:4px 8px; font-size:12px}
-  .btn-icon{padding:4px; font-size:16px}
-  .modal-header{padding:0.75rem 1rem 0.5rem}
-  .modal-title{font-size:16px}
-  .modal-body{padding:0.75rem 1rem}
-  .modal-footer{padding:0.5rem 1rem 0.75rem}
-  .legend{padding: 8px 0.75rem;}
-  .legend-item{font-size: 11px;}
-  .form-group{margin-bottom: 0.75rem;}
-  .form-input, .form-select{padding: 6px 10px; font-size: 14px;}
+  /* Superposición de Eventos achicada */
+  .event-label-bar{left:100px; top:2px; font-size:9px; padding:0px 4px; border-left-width: 2px; height: 18px; line-height: 18px;}
+  
+  /* Botones y Menús Modal */
+  .btn{padding:4px 8px; font-size:11px}
+  .btn-icon{padding:4px; font-size:15px}
+  .modal-header{padding:0.5rem 0.75rem 0.4rem}
+  .modal-title{font-size:15px}
+  .modal-body{padding:0.5rem 0.75rem; gap: 0.5rem;}
+  .modal-footer{padding:0.5rem 0.75rem 0.5rem}
+  .form-group{margin-bottom: 0.5rem;}
+  .form-label{font-size: 10px; margin-bottom: 3px;}
+  .form-input, .form-select{padding: 4px 8px; font-size: 13px;}
+  .day-chip{padding:4px 8px; font-size:11px;}
+  
+  /* Leyenda */
+  .legend{padding: 6px 0.5rem; gap: 10px;}
+  .legend-item{font-size: 10px;}
+  .legend-dot{width:10px; height:10px;}
 }
 
 /* Panels */
@@ -117,21 +130,19 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .water-cups{display:flex;gap:6px;flex-wrap:wrap}
 .water-cup{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--text-mut);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-mut);font-size:16px;transition:all .15s;flex-shrink:0}
 .water-cup.filled{background:var(--accent-dark);color:var(--bg-main);border-color:var(--accent-dark)}
-.water-cup:hover{transform:scale(1.1); border-color:var(--text-sec)}
 
 /* Task sections */
 .task-section{margin-bottom:1rem}
 .task-section-header{font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.08em;color:var(--text-sec);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .task-list{display:flex;flex-direction:column;gap:4px}
 .task-item{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:var(--r);background:var(--bg-alt);border:1px solid var(--border-light);cursor:pointer;transition:all .15s;position:relative}
-.task-item:hover{border-color:var(--border-focus);background:var(--border-light)}
 .task-item.done .task-name{text-decoration:line-through;color:var(--text-mut)}
 .task-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--text-mut);background:var(--bg-sec);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
 .task-check.checked{background:var(--accent-dark);border-color:var(--accent-dark);color:var(--bg-main)}
 .task-name{font-size:15px;color:var(--text-main);flex:1;line-height:1.4}
 .task-time{font-size:12px;color:var(--text-mut);white-space:nowrap}
 .task-type-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px}
-.task-delete{opacity:0;font-size:14px;color:var(--text-mut);cursor:pointer;padding:2px;border-radius:3px;transition:opacity .15s;background:none;border:none;line-height:1}
+.task-delete{opacity:0;font-size:14px;color:var(--text-mut);cursor:pointer;padding:2px;border-radius:3px;transition:opacity .15s;background:none;border:none;line-height:1; position:absolute; right:4px;}
 .task-item:hover .task-delete{opacity:1; color:var(--text-sec)}
 .empty-tasks{font-size:13px;color:var(--text-mut);font-style:italic;padding:4px 0}
 
@@ -142,7 +153,6 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .time-label{width:48px;flex-shrink:0;font-size:12px;color:var(--text-sec);padding:6px 8px 6px 0;text-align:right;user-select:none;align-self:flex-start;padding-top:8px}
 .time-blocks{display:flex;gap:3px;align-items:center;flex:1;padding:6px 0 6px 4px;flex-wrap:nowrap;position:relative;z-index:1}
 .time-block{width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:var(--bg-alt);cursor:pointer;transition:all .12s;flex-shrink:0}
-.time-block:hover{border-color:var(--accent-dark);background:var(--border-focus)}
 .time-block.occupied{background:var(--accent-dark);border-color:var(--accent-dark)}
 .time-block.event-occupied{background:var(--accent-mid);border-color:var(--accent-mid);cursor:default}
 .time-block.routine-occupied{background:var(--accent-light);border-color:var(--accent-light);cursor:default}
@@ -151,11 +161,8 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-sec);font-family: 'Times New Roman', Times, serif;font-size:14px;color:var(--text-main);cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn:hover{background:var(--bg-alt);border-color:var(--border-focus)}
 .btn-primary{background:var(--accent-dark);color:var(--bg-main);border-color:var(--accent-dark);font-weight:bold}
-.btn-primary:hover{background:#FFFFFF;border-color:#FFFFFF}
 .btn-icon{padding:7px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg-sec);cursor:pointer;font-size:18px;color:var(--text-sec);display:inline-flex;align-items:center;transition:all .15s}
-.btn-icon:hover{background:var(--bg-alt); color:var(--text-main); border-color:var(--border-focus)}
 
 /* Modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter: blur(3px);z-index:100;align-items:center;justify-content:center;padding:1rem}
@@ -170,26 +177,13 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .form-group{margin-bottom:1rem}
 .form-label{display:block;font-size:12px;font-weight:bold;color:var(--text-sec);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
 .form-input,.form-select{
-  width:100%;
-  padding:8px 12px;
-  border-radius:var(--r);
-  border:1px solid var(--border);
-  background:var(--bg-alt);
-  font-family: 'Times New Roman', Times, serif;
-  font-size:15px;
-  color:var(--text-main);
-  outline:none;
-  transition:border .15s;
+  width:100%; padding:8px 12px; border-radius:var(--r); border:1px solid var(--border);
+  background:var(--bg-alt); font-family: 'Times New Roman', Times, serif; font-size:15px; color:var(--text-main); outline:none;
 }
-.form-input:focus,.form-select:focus{border-color:var(--border-focus);box-shadow: 0 0 0 1px var(--border-focus)}
 .form-select{
-  appearance: none;
-  -webkit-appearance: none;
+  appearance: none; -webkit-appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A0A0A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 14px;
-  padding-right: 32px;
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 32px;
 }
 .form-select option { background: var(--bg-sec); color: var(--text-main); }
 
@@ -199,8 +193,7 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .time-select { width: 70px; text-align: center; padding: 6px 20px 6px 8px; font-size: 14px; background-position: right 4px center; }
 
 .day-selector{display:flex;gap:6px;flex-wrap:wrap}
-.day-chip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg-alt);font-size:13px;cursor:pointer;color:var(--text-sec);transition:all .15s;user-select:none}
-.day-chip:hover{border-color:var(--text-sec); color:var(--text-main)}
+.day-chip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg-alt);font-size:13px;cursor:pointer;color:var(--text-sec);user-select:none}
 .day-chip.selected{background:var(--accent-dark);color:var(--bg-main);border-color:var(--accent-dark); font-weight:bold;}
 
 .time-range-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;background:var(--bg-alt);border-radius:var(--r);padding:10px 12px; border: 1px solid var(--border);}
@@ -213,7 +206,6 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-sec)}
 .legend-dot{width:12px;height:12px;border-radius:2px;border:1px solid var(--border)}
 
-/* Settings modal */
 .settings-row{display:flex;align-items:center;gap:12px}
 .settings-row .form-input{width:100px}
 
@@ -221,7 +213,6 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--bg-main)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:var(--border-focus)}
 </style>
 </head>
 <body>
@@ -229,11 +220,10 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
   <div class="top-bar">
     <h1 class="app-title">mi agenda <span>✦</span></h1>
     <div class="top-actions">
-      <!-- BOTÓN INSTALAR PWA (Oculto por defecto) -->
+      <!-- BOTÓN INSTALAR PWA -->
       <button id="installBtn" class="btn btn-primary" style="display:none;" onclick="installApp()" title="Instalar Aplicación">
         <i class="ti ti-device-mobile" aria-hidden="true"></i> Instalar
       </button>
-
       <button class="btn btn-icon" onclick="openSettings()" title="Ajustes" aria-label="Ajustes">
         <i class="ti ti-settings" aria-hidden="true"></i>
       </button>
@@ -255,7 +245,7 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
   <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title">Nuevo ítem</h2>
-      <button class="btn-icon" onclick="closeAddModal()" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+      <button class="btn-icon" onclick="closeAddModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -276,16 +266,12 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
       <div id="tareaFields" style="display:none">
         <div class="form-group">
           <label class="form-label">Día</label>
-          <select class="form-select" id="tareaDay">
-            <option value="">Sin asignar</option>
-          </select>
+          <select class="form-select" id="tareaDay"></select>
         </div>
         <div class="form-group">
           <label class="form-label">Hora (opcional)</label>
-          <!-- Selector Custom 10 en 10 min -->
           <div class="time-picker-wrapper">
-             <select class="form-select time-select" id="tareaHora_h"></select>
-             <span>:</span>
+             <select class="form-select time-select" id="tareaHora_h"></select><span>:</span>
              <select class="form-select time-select" id="tareaHora_m"></select>
           </div>
         </div>
@@ -329,7 +315,7 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
   <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title">Ajustes</h2>
-      <button class="btn-icon" onclick="closeSettings()" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+      <button class="btn-icon" onclick="closeSettings()"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -337,13 +323,10 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
         <div class="settings-row">
           <span style="font-size:14px;color:var(--text-sec)">De</span>
           <input class="form-input" id="hourStart" type="number" min="0" max="23" style="width:70px" value="5"/>
-          <span style="font-size:14px;color:var(--text-sec)">:00 a</span>
+          <span style="font-size:14px;color:var(--text-sec)">a</span>
           <input class="form-input" id="hourEnd" type="number" min="1" max="24" style="width:70px" value="22"/>
-          <span style="font-size:14px;color:var(--text-sec)">:00</span>
         </div>
       </div>
-      
-      <!-- Campos de Enfoque Semanal -->
       <div class="form-group" style="margin-top:1.5rem; border-top: 1px solid var(--border-light); padding-top: 1rem;">
         <label class="form-label">Enfoque Semanal</label>
         <div style="display:flex; flex-direction:column; gap:8px;">
@@ -352,12 +335,9 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
           <input class="form-input" id="setIdioma" placeholder="Idioma a practicar..." type="text"/>
         </div>
       </div>
-
     </div>
     <div class="modal-footer" style="justify-content: space-between;">
-      <button class="btn" style="border-color: var(--border-focus); color: #ff6b6b; transition: all 0.2s;" onclick="clearAllData(this)">
-        <i class="ti ti-trash"></i> Limpiar
-      </button>
+      <button class="btn" style="border-color: var(--border-focus); color: #ff6b6b;" onclick="clearAllData(this)"><i class="ti ti-trash"></i> Limpiar</button>
       <div style="display: flex; gap: 8px;">
         <button class="btn" onclick="closeSettings()">Cancelar</button>
         <button class="btn btn-primary" onclick="saveSettings()"><i class="ti ti-check"></i> Aplicar</button>
@@ -369,31 +349,26 @@ h1,h2,h3{font-family: 'Times New Roman', Times, serif; font-weight: bold;}
 <script>
 const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const DAYS_SHORT = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-
-// Colores monocromáticos para los tipos (para bolitas de colores y barras)
 const TYPE_COLORS = {evento:'#6B6B6B',rutina:'#404040',tarea:'#A3A3A3'};
 const SEC_LABELS = {manana:'Mañana',tarde:'Tarde',noche:'Noche'};
 
-// Opciones de Horas y Minutos (generadas dinámicamente)
 const hourOptions = Array.from({length:24}, (_,i) => `<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`).join('');
 const minOptions = ['00','10','20','30','40','50'].map(m => `<option value="${m}">${m}</option>`).join('');
 const defaultOption = `<option value="">--</option>`;
 
-// TODAY detection (0=Mon)
 const todayJs = new Date().getDay();
 const todayIdx = todayJs === 0 ? 6 : todayJs - 1;
 
 let state = {
-  activeDay: todayIdx, // Inicia automáticamente en el día actual
-  settings: {hourStart:5, hourEnd:22, libro:'', curso:'', idioma:''}, // Agregados campos de enfoque
+  activeDay: todayIdx,
+  settings: {hourStart:5, hourEnd:22, libro:'', curso:'', idioma:''},
   water: Array(7).fill(null).map(()=>Array(8).fill(false)),
-  blocks: Array(7).fill(null).map(()=>({})), // {hour_block: true/false}
+  blocks: Array(7).fill(null).map(()=>({})),
   items: [],
   doneMap: {},
   nextId: 1,
 };
 
-// --- RENDER ---
 function renderTabs(){
   const el = document.getElementById('dayTabs');
   el.innerHTML = DAYS.map((d,i)=>`
@@ -410,13 +385,10 @@ function renderDay(){
   const blocks = state.blocks[d];
   const dayItems = getItemsForDay(d);
 
-  // Tarjeta de Metas Semanales (se oculta si no hay nada configurado)
   const goalsHTML = (state.settings.libro || state.settings.curso || state.settings.idioma) ? `
     <div class="task-section">
-      <div class="task-section-header">
-        <i class="ti ti-target" aria-hidden="true"></i> Enfoque Semanal
-      </div>
-      <div style="background:var(--bg-alt); padding:10px 12px; border-radius:var(--r); border:1px solid var(--border-light); font-size:14px; color:var(--text-main); display:flex; flex-direction:column; gap:6px;">
+      <div class="task-section-header"><i class="ti ti-target"></i> Enfoque Semanal</div>
+      <div style="background:var(--bg-alt); padding:8px 10px; border-radius:var(--r); border:1px solid var(--border-light); font-size:13px; color:var(--text-main); display:flex; flex-direction:column; gap:4px;">
         ${state.settings.libro ? `<div><span style="color:var(--text-mut);font-weight:bold;">Libro:</span> ${state.settings.libro}</div>` : ''}
         ${state.settings.curso ? `<div><span style="color:var(--text-mut);font-weight:bold;">Curso:</span> ${state.settings.curso}</div>` : ''}
         ${state.settings.idioma ? `<div><span style="color:var(--text-mut);font-weight:bold;">Idioma:</span> ${state.settings.idioma}</div>` : ''}
@@ -424,46 +396,32 @@ function renderDay(){
     </div>
   ` : '';
 
-  // Left panel
   const leftHTML = `
     <div class="panel">
       <div class="panel-header">
         <h2 class="panel-title">${DAYS[d]}</h2>
-        <span style="font-size:13px;color:var(--text-mut)">${todayIdx===d?'Hoy - ':''}
-          ${getDateStr(d)}</span>
+        <span style="font-size:12px;color:var(--text-mut)">${todayIdx===d?'Hoy - ':''}${getDateStr(d)}</span>
       </div>
       <div class="panel-body">
         <div class="water-section">
-          <div class="section-label"><i class="ti ti-droplet" aria-hidden="true"></i> Agua</div>
+          <div class="section-label"><i class="ti ti-droplet"></i> Agua</div>
           <div class="water-cups" id="waterCups">
-            ${water.map((f,i)=>`
-              <button class="water-cup ${f?'filled':''}" onclick="toggleWater(${d},${i})" title="${i+1} vaso${i?'s':''}">
-                <i class="ti ti-droplet${f?'':'-half'}" aria-hidden="true"></i>
-              </button>`).join('')}
+            ${water.map((f,i)=>`<button class="water-cup ${f?'filled':''}" onclick="toggleWater(${d},${i})"><i class="ti ti-droplet${f?'':'-half'}"></i></button>`).join('')}
           </div>
-          <div style="font-size:13px;color:var(--text-mut);margin-top:8px">${water.filter(Boolean).length} / 8 vasos</div>
+          <div style="font-size:11px;color:var(--text-mut);margin-top:4px">${water.filter(Boolean).length} / 8 vasos</div>
         </div>
-        
         ${goalsHTML}
-
         ${['manana','tarde','noche'].map(sec=>`
           <div class="task-section">
-            <div class="task-section-header">
-              <i class="ti ti-${sec==='manana'?'sunrise':sec==='tarde'?'sun':'moon'}" aria-hidden="true"></i>
-              ${SEC_LABELS[sec]}
-            </div>
-            <div class="task-list">
-              ${renderTasksForSection(d,sec,dayItems)}
-            </div>
+            <div class="task-section-header"><i class="ti ti-${sec==='manana'?'sunrise':sec==='tarde'?'sun':'moon'}"></i>${SEC_LABELS[sec]}</div>
+            <div class="task-list">${renderTasksForSection(d,sec,dayItems)}</div>
           </div>`).join('')}
       </div>
     </div>`;
 
-  // Right panel
   const hours = [];
   for(let h=hourStart;h<hourEnd;h++) hours.push(h);
 
-  // Build event map: which (hour,block) slots are covered by items
   const itemSlots = {};
   const itemBarRows = {};
   dayItems.filter(it=>it.type!=='tarea'&&it.schedule).forEach(it=>{
@@ -477,16 +435,13 @@ function renderDay(){
       const key=`${hh}_${bb}`;
       itemSlots[key]=it;
     }
-    // bar label: on the first row
     const fk=`${sh}_${Math.floor(sm/10)}`;
     itemBarRows[fk]=it;
   });
 
   const rightHTML = `
     <div class="panel">
-      <div class="panel-header">
-        <h3 class="panel-title" style="font-size:17px">Time-blocking</h3>
-      </div>
+      <div class="panel-header"><h3 class="panel-title">Time-blocking</h3></div>
       <div class="time-grid" id="timeGrid">
         ${hours.map(h=>`
           <div class="time-row">
@@ -500,14 +455,9 @@ function renderDay(){
                 if(it) cls+=it.type==='evento'?' event-occupied':' routine-occupied';
                 else if(occupied) cls+=' occupied';
                 const clickable=!it;
-                return `<div class="${cls}" 
-                  ${clickable?`onclick="toggleBlock(${d},${h},${b})" title="${String(h).padStart(2,'0')}:${String(b*10).padStart(2,'0')}"`:''}
-                  ></div>`;
+                return `<div class="${cls}" ${clickable?`onclick="toggleBlock(${d},${h},${b})"`:''}></div>`;
               }).join('')}
-              ${itemBarRows[`${h}_0`]?`
-                <div class="event-label-bar ${itemBarRows[`${h}_0`].type==='rutina'?'routine-label-bar':''}" style="left:176px">
-                  ${itemBarRows[`${h}_0`].name}
-                </div>`:''}
+              ${itemBarRows[`${h}_0`]?`<div class="event-label-bar ${itemBarRows[`${h}_0`].type==='rutina'?'routine-label-bar':''}">${itemBarRows[`${h}_0`].name}</div>`:''}
             </div>
           </div>`).join('')}
       </div>
@@ -537,14 +487,12 @@ function renderTasksForSection(d,sec,dayItems){
   return items.map(it=>`
     <div class="task-item ${state.doneMap[it.id+'-'+d]?'done':''}" id="task_${it.id}_${d}">
       <div class="task-check ${state.doneMap[it.id+'-'+d]?'checked':''}" onclick="toggleDone(${it.id},${d})">
-        ${state.doneMap[it.id+'-'+d]?'<i class="ti ti-check" style="font-size:12px"></i>':''}
+        ${state.doneMap[it.id+'-'+d]?'<i class="ti ti-check"></i>':''}
       </div>
       <div class="task-type-dot" style="background:${TYPE_COLORS[it.type]||'#888'}"></div>
       <span class="task-name">${it.name}</span>
       ${it.schedule&&it.schedule.start?`<span class="task-time">${it.schedule.start}</span>`:''}
-      <button class="task-delete" onclick="deleteItem(${it.id})" title="Eliminar">
-        <i class="ti ti-trash" style="font-size:16px"></i>
-      </button>
+      <button class="task-delete" onclick="deleteItem(${it.id})"><i class="ti ti-trash"></i></button>
     </div>`).join('');
 }
 
@@ -567,7 +515,6 @@ function getDateStr(d){
   return dt.toLocaleDateString('es-AR',{day:'numeric',month:'short'});
 }
 
-// --- ACTIONS ---
 function setDay(i){state.activeDay=i;renderTabs();renderDay()}
 
 function toggleWater(d, index){
@@ -595,7 +542,6 @@ function deleteItem(id){
   renderDay();
 }
 
-// --- ADD MODAL ---
 let selectedDays = [];
 let useSameSchedule = true;
 
@@ -640,7 +586,7 @@ function toggleSameSchedule() {
 
 function renderTimeRanges(){
   const c=document.getElementById('timeRanges');
-  if(!selectedDays.length){c.innerHTML='<div style="font-size:13px;color:var(--text-mut);font-style:italic">Seleccioná días primero</div>';return}
+  if(!selectedDays.length){c.innerHTML='<div style="font-size:12px;color:var(--text-mut);font-style:italic">Seleccioná días primero</div>';return}
   
   if (useSameSchedule) {
     c.innerHTML = `
@@ -648,14 +594,12 @@ function renderTimeRanges(){
         <span class="time-range-day">Todos</span>
         <div class="time-range-inputs">
           <div class="time-picker-wrapper">
-            <select id="trs_h_all" class="form-select time-select">${defaultOption}${hourOptions}</select>
-            <span>:</span>
+            <select id="trs_h_all" class="form-select time-select">${defaultOption}${hourOptions}</select><span>:</span>
             <select id="trs_m_all" class="form-select time-select">${defaultOption}${minOptions}</select>
           </div>
           <span class="time-sep">→</span>
           <div class="time-picker-wrapper">
-            <select id="tre_h_all" class="form-select time-select">${defaultOption}${hourOptions}</select>
-            <span>:</span>
+            <select id="tre_h_all" class="form-select time-select">${defaultOption}${hourOptions}</select><span>:</span>
             <select id="tre_m_all" class="form-select time-select">${defaultOption}${minOptions}</select>
           </div>
         </div>
@@ -667,14 +611,12 @@ function renderTimeRanges(){
         <span class="time-range-day">${DAYS_SHORT[i]}</span>
         <div class="time-range-inputs">
           <div class="time-picker-wrapper">
-            <select id="trs_h_${i}" class="form-select time-select">${defaultOption}${hourOptions}</select>
-            <span>:</span>
+            <select id="trs_h_${i}" class="form-select time-select">${defaultOption}${hourOptions}</select><span>:</span>
             <select id="trs_m_${i}" class="form-select time-select">${defaultOption}${minOptions}</select>
           </div>
           <span class="time-sep">→</span>
           <div class="time-picker-wrapper">
-            <select id="tre_h_${i}" class="form-select time-select">${defaultOption}${hourOptions}</select>
-            <span>:</span>
+            <select id="tre_h_${i}" class="form-select time-select">${defaultOption}${hourOptions}</select><span>:</span>
             <select id="tre_m_${i}" class="form-select time-select">${defaultOption}${minOptions}</select>
           </div>
         </div>
@@ -685,7 +627,7 @@ function renderTimeRanges(){
 function saveItem(){
   const name=document.getElementById('itemName').value.trim();
   const type=document.getElementById('itemType').value;
-  if(!name||!type){return} // Removido alert nativo para evitar bloqueos
+  if(!name||!type){return}
   const id=state.nextId++;
   
   if(type==='tarea'){
@@ -725,10 +667,8 @@ function saveItem(){
   closeAddModal();renderDay();
 }
 
-// --- SETTINGS ---
 function openSettings(){
   document.getElementById('settingsModal').classList.add('open');
-  // Precargar los datos actuales de ajustes visualmente
   document.getElementById('hourStart').value = state.settings.hourStart;
   document.getElementById('hourEnd').value = state.settings.hourEnd;
   document.getElementById('setLibro').value = state.settings.libro || '';
@@ -744,7 +684,6 @@ function saveSettings(){
   state.settings.hourStart=Math.max(0,Math.min(s,23));
   state.settings.hourEnd=Math.max(state.settings.hourStart+1,Math.min(e,24));
   
-  // Guardar enfoque semanal
   state.settings.libro = document.getElementById('setLibro').value.trim();
   state.settings.curso = document.getElementById('setCurso').value.trim();
   state.settings.idioma = document.getElementById('setIdioma').value.trim();
@@ -755,7 +694,6 @@ function saveSettings(){
 
 let clearConfirmTimeout;
 function clearAllData(btnElement) {
-  // Manejo de confirmación en el propio botón en lugar de alert/confirm nativo
   if (!btnElement.hasAttribute('data-confirm')) {
     btnElement.setAttribute('data-confirm', 'true');
     const originalHTML = btnElement.innerHTML;
@@ -779,37 +717,26 @@ function clearAllData(btnElement) {
   btnElement.style.backgroundColor = 'transparent';
   btnElement.style.color = '#ff6b6b';
   
-  // 1. Eliminar tareas (mantiene eventos y rutinas, pero las tareas se borran)
   state.items = state.items.filter(it => it.type !== 'tarea');
-  // 2. Desmarcar todos los eventos y rutinas
   state.doneMap = {};
-  // 3. Desmarcar todos los registros de agua
   state.water = Array(7).fill(null).map(()=>Array(8).fill(false));
-  // 4. Limpiar los bloques de time-blocking manuales
   state.blocks = Array(7).fill(null).map(()=>({}));
   
   closeSettings();
   renderDay();
 }
 
-// --- INIT ---
 function init(){
   state.items.push({id:state.nextId++,name:'Revisar correos',type:'tarea',day:todayIdx,hora:'09:00',section:'manana'});
-  state.items.push({id:state.nextId++,name:'Lectura y resumen',type:'tarea',day:todayIdx,hora:'',section:'tarde'});
   state.items.push({id:state.nextId++,name:'Reunión de proyecto',type:'evento',days:[todayIdx,(todayIdx+2)%7],
     schedules:{[todayIdx]:{start:'10:00',end:'11:30'},[(todayIdx+2)%7]:{start:'09:00',end:'10:00'}}});
   state.items.push({id:state.nextId++,name:'Meditar',type:'rutina',days:[0,1,2,3,4],
     schedules:Object.fromEntries([0,1,2,3,4].map(i=>[i,{start:'06:00',end:'07:00'}]))});
-  state.water[todayIdx][0]=true;
-  state.water[todayIdx][1]=true;
-  state.water[todayIdx][2]=true;
   renderTabs();renderDay();
 }
 init();
 
 // --- PWA / LÓGICA DE INSTALACIÓN ---
-
-// 1. Generar Manifest Dinámico (Para cumplir requisito PWA en un solo archivo)
 const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="400" height="400" x="56" y="56" rx="64" fill="%23141414"/><path d="M160 112v48M352 112v48M112 208h288" stroke="%23EFEFEF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const iconUrl = 'data:image/svg+xml;charset=utf-8,' + svgIcon;
 const manifest = {
@@ -819,10 +746,7 @@ const manifest = {
   display: "standalone",
   background_color: "#141414",
   theme_color: "#141414",
-  icons: [
-    { src: iconUrl, sizes: "192x192", type: "image/svg+xml" },
-    { src: iconUrl, sizes: "512x512", type: "image/svg+xml" }
-  ]
+  icons: [{ src: iconUrl, sizes: "512x512", type: "image/svg+xml" }]
 };
 const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/manifest+json'});
 const manifestLink = document.createElement('link');
@@ -830,36 +754,21 @@ manifestLink.rel = 'manifest';
 manifestLink.href = URL.createObjectURL(manifestBlob);
 document.head.appendChild(manifestLink);
 
-// Nota: Hemos removido el intento de registrar un Service Worker mediante Blob, 
-// ya que los navegadores exigen que exista un archivo físico (ej. sw.js) en el servidor 
-// para permitir la instalación completa como PWA por cuestiones de seguridad.
-
-// 3. Manejar el evento para mostrar el botón de Instalar
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Previene que aparezca el mini-infobar automático en móviles
   e.preventDefault();
-  // Guardamos el evento para dispararlo cuando el usuario haga click
   deferredPrompt = e;
-  // Mostramos nuestro botón de instalar
   installBtn.style.display = 'inline-flex';
 });
 
 function installApp() {
   if (!deferredPrompt) return;
-  
-  // Mostramos el aviso nativo de instalación del navegador
   deferredPrompt.prompt();
-  
-  // Esperamos la respuesta del usuario
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
-      console.log('El usuario aceptó la instalación');
-      installBtn.style.display = 'none'; // Lo ocultamos si aceptó
-    } else {
-      console.log('El usuario rechazó la instalación');
+      installBtn.style.display = 'none';
     }
     deferredPrompt = null;
   });
